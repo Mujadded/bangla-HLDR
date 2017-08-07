@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bangla Handwritten Letter and Digit Recognition using Convolutional Neural Networks</title>
+  
+  
+  
+      <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body>
+ 
+		<h1>Bangla Handwritten Letter and Digit Recognition using <span>Convolutional Neural Networks</span></h1>
+
+		<canvas id="canvas" width="280" height="280" style="border:8px solid; float: left; margin: 70px; margin-top:160px;  border-radius: 5px; cursor: crosshair;"></canvas>
+		<div id="debug" style="margin:65px; margin-top:100px;">
+
+			
+			<!-- <input type="color" id="colors">
+			 <input type="number" id="lineWidth" style="width:60px" value="0.2" step="0.1" min="0.1"> -->
+			<input type="button" id="clearButton" value="Clear" style="">
+			<br/>
+			<span style="color: #4DAF7C; font-weight: 400; font-family: 'Open Sans', Helvetica;	">Draw any single Bangla Letter or Digit inside this Box!</span>
+		</div>
+
+		<div style="margin-left:175px; margin-top:460px; float:left; position:absolute;">
+			
+			<a href="#" class="myButton"><span style=" font-weight: 400; font-family: 'Open Sans', Helvetica;	"> Predict </span></a>			
+		</div>
+		<div >
+			<h1 style="margin-right:20px; margin-top:300px;float:left;font-size:40px;font-weight:bolder;"> In Unicode Font: <span id="result" style="font-size:50px;" > </span></h1>
+		</div>
+
+		
+  		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+	    <script src="{{ url_for('static',filename='index.js') }}"></script>
+	    <script type="text/javascript">
+	   
+	   		$(".myButton").click(function(){
+	   			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	   			var canvasObj = document.getElementById("canvas");
+	   			var img = canvasObj.toDataURL();
+	   			$.ajax({
+	   				type: "POST",
+	   				url: $SCRIPT_ROOT + "/predict/",
+	   				data: img,
+	   				success: function(data){
+						var letters='অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ ক খ গ ঘ ঙ চ ছ জ ঝ ঞ ট ঠ ড ঢ ণ ত থ দ ধ ন প ফ ব ভ ম য র ল শ ষ স হ ড় ঢ় য় ৎ ং ঃ ৺ ০ ১ ২ ৩ ৪ ৫ ৬ ৭ ৮ ঌ ক্ষ দ্ধ ঙগ সক সফ সহ চছ কত সন ষঞ মপ শঋ পত মব ণও দঙ তথ ষঠ লপ ষপ নদ নধ মম নঠ'.split(' ');
+						data=data.replace(/\D/g,'');
+	   					$('#result').text(letters[data]);
+	   				}
+	   			});
+	   		});
+	   
+	   </script>
+</body>
+</html>
