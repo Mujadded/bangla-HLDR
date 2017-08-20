@@ -60,10 +60,10 @@ def predict():
 	#compute a bit-wise inversion so black becomes white and vice versa
 	x = np.invert(x)
 	#make it the right size
-	x = imresize(x,(110,110))
+	x = imresize(x,(112,112))
 	#imshow(x)
 	#convert to a 4D tensor to feed into our model
-	x = x.reshape(1,110,110,1)
+	x = x.reshape(1,112,112,1)
 	x=x/255
 	print "debug2"
 	#in our computation graph
